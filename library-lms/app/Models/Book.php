@@ -15,6 +15,14 @@ class Book extends Model
         'author',
         'isbn',
         'total_copies',
-        'available_copies',
+        'available_copies', // Included for loan management
     ];
+
+    /**
+     * Get the loans for the book.
+     */
+    public function loans()
+    {
+        return $this->hasMany(Loan::class);
+    }
 }

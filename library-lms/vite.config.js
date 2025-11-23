@@ -4,9 +4,10 @@ import laravel from 'laravel-vite-plugin';
 export default defineConfig({
     plugins: [
         laravel({
+            // CRITICAL: These are the paths Vite needs to watch and compile
             input: [
-                'resources/sass/app.scss',
-                'resources/js/app.js',
+                'resources/css/app.css', 
+                'resources/js/app.js'
             ],
             refresh: true,
         }),

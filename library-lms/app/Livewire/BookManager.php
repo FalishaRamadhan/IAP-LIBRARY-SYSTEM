@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Book;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth; // <-- Keep Auth import for secure methods
 
 class BookManager extends Component
 {
@@ -29,14 +30,15 @@ class BookManager extends Component
             'copies' => 'required|integer|min:1',
         ];
     }
+    
+    // allowing all authenticated users to view the component.
 
-    // Runs every time the 'search' property changes
+
     public function updatedSearch()
     {
-        $this->resetPage(); // Reset pagination when search query changes
+        $this->resetPage(); 
     }
 
-    // Function to reset all public properties (form clearing)
     public function resetForm()
     {
         $this->title = '';
@@ -49,6 +51,12 @@ class BookManager extends Component
     // Save or Update a book record
     public function save()
     {
+        // AUTH CHECK: Only Admins can save/update (This security check remains)
+        if (!Auth::user() || !Auth::user()->isAdmin()) {
+            session()->flash('error', 'Unauthorized access: You must be an Admin to manage inventory.');
+            return;
+        }
+
         $validatedData = $this->validate();
 
         if ($this->editingBookId) {
@@ -59,8 +67,7 @@ class BookManager extends Component
                 'author' => $validatedData['author'],
                 'isbn' => $validatedData['isbn'],
                 'total_copies' => $validatedData['copies'],
-                // Simple logic: assume available copies match total for simplicity in this example
-                'available_copies' => $validatedData['copies'],
+                'available_copies' => $validatedData['copies'], // Simple logic for now
             ]);
             session()->flash('success', 'Book updated successfully!');
 
@@ -82,6 +89,11 @@ class BookManager extends Component
     // Populate the form for editing
     public function edit(Book $book)
     {
+        // AUTH CHECK: Only Admins can edit (This security check remains)
+        if (!Auth::user() || !Auth::user()->isAdmin()) {
+            session()->flash('error', 'Unauthorized access: You must be an Admin to edit.');
+            return;
+        }
         $this->editingBookId = $book->id;
         $this->title = $book->title;
         $this->author = $book->author;
@@ -92,6 +104,12 @@ class BookManager extends Component
     // Delete a book record
     public function delete($bookId)
     {
+        // AUTH CHECK: Only Admins can delete (This security check remains)
+        if (!Auth::user() || !Auth::user()->isAdmin()) {
+            session()->flash('error', 'Unauthorized access: You must be an Admin to delete.');
+            return;
+        }
+
         Book::find($bookId)->delete();
         session()->flash('error', 'Book deleted successfully.');
     }
@@ -107,6 +125,6 @@ class BookManager extends Component
 
         return view('livewire.book-manager', [
             'books' => $books
-        ])->layout('layouts.app');
+        ])->layout('layouts.app'); // Ensure it uses the layout file
     }
 }
