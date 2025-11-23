@@ -1,8 +1,8 @@
-📚 Small-Scale Library Management System (LMS) - IAP Project
-📄 Overview and Project Goals
+ Small-Scale Library Management System (LMS) - IAP Project
+ Overview and Project Goals
 This project implements a web-based, small-scale Library Management System (LMS) developed as an IAP Project. The central problem addressed is the difficulty in accessing and managing physical library resources in a scalable digital environment.
 
-🎯 Key Objectives (Rubric Alignment)
+Key Objectives (Rubric Alignment)
 Enhanced Resource Access (Read Operations): Provide a fast, searchable, and filtered digital catalog accessible to all users (Category 4).
 
 Streamlined Management (CRUD): Offer a secure administrative interface (Librarian role) for accurate inventory management (Category 4, 7).
@@ -11,7 +11,7 @@ Robust Data Integrity: Enforce database constraints and relationships (e.g., Boo
 
 Modern UX: Deliver a responsive and intuitive user experience using dynamic frontend tools (Category 6).
 
-💻 Tech Stack & Dependencies
+ Tech Stack & Dependencies
 The system is built on the Laravel framework, leveraging a modern dynamic stack for development efficiency.
 
 Core Technologies
