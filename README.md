@@ -1,31 +1,69 @@
- Small-Scale Library Management System (LMS) - IAP Project
- Overview and Project Goals
-This project implements a web-based, small-scale Library Management System (LMS) developed as an IAP Project. The central problem addressed is the difficulty in accessing and managing physical library resources in a scalable digital environment.
+ =
+Small-Scale Library Management System (LMS) - IAP Project
 
-Key Objectives (Rubric Alignment)
-Enhanced Resource Access (Read Operations): Provide a fast, searchable, and filtered digital catalog accessible to all users (Category 4).
+Library Management System Overview
+This application is a dynamic, full-stack web system designed to manage all essential library activities. It is built on the modern TALL Stack (Tailwind CSS for look, Livewire/Alpine.js for interactive features, and Laravel for the powerful PHP backend). It also includes a robust RESTful API layer for integrating with external tools or mobile apps.
 
-Streamlined Management (CRUD): Offer a secure administrative interface (Librarian role) for accurate inventory management (Category 4, 7).
+Core Functionality
+The system is organized around three main areas:
 
-Robust Data Integrity: Enforce database constraints and relationships (e.g., Book to User via foreign keys) to maintain data quality (Category 3).
+Book Inventory: This is the public catalog, where any authenticated member can search and view details about all books in the library. Only administrators can add, edit, or delete book records.
 
-Modern UX: Deliver a responsive and intuitive user experience using dynamic frontend tools (Category 6).
+Loan Desk: This module tracks every book issued and returned. It is primarily used by administrators to issue books to members and process returns, calculating simple fines for overdue items. Members can only view their personal loan history here.
 
- Tech Stack & Dependencies
-The system is built on the Laravel framework, leveraging a modern dynamic stack for development efficiency.
+Member Registry: This handles user management. Administrators use this to register new members, assign roles (Admin or Member), and manage user access details.
 
-Core Technologies
-The Backend Framework is Laravel (PHP), which provides the Model-View-Controller (MVC) structure, Eloquent ORM, Routing, and foundational business logic.
+Security and Roles (RBAC)
+The system uses Role-Based Access Control to ensure secure operations:
 
-For Frontend Dynamics, the project utilizes Livewire and Alpine.js.
-Livewire is a full-stack framework that handles dynamic server-side rendering and state management, allowing us to build complex interfaces with minimal JavaScript. 
-Alpine.js is used alongside Livewire to provide minimal, declarative JavaScript behavior for specific user experience enhancements. 
-The styling is managed by Tailwind CSS, a utility-first framework that ensures a rapid and responsive UI development (Category 6).
+Administrators: Have full control over the entire system. They can manage inventory, issue/return books, and manage the member list.
 
-Infrastructure and Tooling
-The data is persisted in a MySQL/MariaDB instance, which hosts the dedicated LMS Database.
+Members: Have limited access. They can look up books and see their own outstanding and returned loans, but they cannot access any administrative forms or modify any data.
 
-For the development pipeline, Node Version Manager (nvm) is used to ensure consistency in the Node.js environment. 
-Node.js and npm manage and compile frontend assets (like CSS and JavaScript) into final production bundles. 
-The Laravel Breeze scaffolding provides the secure foundation for Authentication & Authorization (Category 7). 
-The internal structure of Laravel Routes and Controllers serves as the application's internal API Layer, driving the data flow between the front and back ends.
+Guests: Must log in to access any part of the application.
+
+IAP Project
+Installed laravel
+Installed live wire
+Installed node version manager (nvm)
+Installed nodejs(builds final css and js assets)
+Installed npm (local project dependencies)
+Installed api
+Created lms database
+Installed alpine js
+
+STEPS
+In the terminal:
+cd library-lms
+composer install
+cp .env.example .env
+php artisan:key generate
+
+In your .env file:
+remove comments in the db part and input appropriate details
+
+In terminal:
+php artisan migrate
+npm install
+php artisan tinker
+
+Paste this in tinker:
+
+\App\Models\User::create([
+    'name' => 'System Admin', 
+    'email' => 'admin@lms.com', 
+    'password' => \Illuminate\Support\Facades\Hash::make('password'),
+    'role' => \App\Models\User::ROLE_ADMIN // Set the admin role
+]);
+
+Then exit tinker
+php artisan serve
+
+Credentials are:
+admin@lms.com
+password
+(Password is literally password)
+
+
+
+
